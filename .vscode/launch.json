@@ -1,0 +1,46 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "dezog",
+			"request": "launch",
+			"name": "Simulator - ZX Spectrum+Next",
+			"remoteType": "zsim",
+			"zsim": {
+				"Z80N": true,
+				"visualMemory": true,
+				"memoryModel": "ZX48K",
+				"ulaScreen": true,
+				"zxBorderWidth": 20,
+				"vsyncInterrupt": true,
+				"zxKeyboard": false,
+				"zxBeeper": false
+			},
+			"disassemblerArgs": {
+				"esxdosRst": true
+			},
+			"sjasmplus": [
+				{
+					"path": "main.sld",
+				},
+			],
+			"commandsAfterLaunch": [
+				"-logpoint enable",
+				"-assertion enable",
+				"-wpmem enable"
+			],
+			"history": {
+				"reverseDebugInstructionCount": 1000000,
+				"spotCount": 10,
+				"codeCoverageEnabled": true
+			},
+			"startAutomatically": true,
+			"rootFolder": "${workspaceFolder}",
+			"load": "main.sna",
+			"topOfStack": "$FF00"
+		}
+	]
+}
