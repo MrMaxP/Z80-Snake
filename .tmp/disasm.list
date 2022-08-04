@@ -11,9 +11,6 @@ L5C0B:       equ  5C0Bh
 L5C16:       equ  5C16h
 L5C3A:       equ  5C3Ah
 L5C45:       equ  5C45h
-L8604:       equ  8604h
-L865F:       equ  865Fh
-L869E:       equ  869Eh
 
 
              org 1300h
@@ -61,49 +58,3 @@ L869E:       equ  869Eh
 135D 06 00        LD   B,00h
 135F CD 1B 1A     CALL L1A1B
 1362 CD 97 00     CALL L0097
-
-
-             org 861Eh
-
-
-861E L861E:
-861E 01 08 FF     LD   BC,FF08h
-8621 ED 43 04 86  LD   (L8604),BC
-8625 3E 01        LD   A,01h
-8627 CD 5F 86     CALL L865F
-862A CD 5F 86     CALL L865F
-862D CD 5F 86     CALL L865F
-8630 CD 9E 86     CALL L869E
-8633 ED 5F        LD   A,R
-
-
-             org 86B6h
-86B6 L86B6:
-86B6 73           LD   (HL),E
-86B7 23           INC  HL
-86B8 0B           DEC  BC
-86B9 78           LD   A,B
-86BA B1           OR   C
-86BB 20 F9        JR   NZ,L86B6
-86BD C9           RET
-
-
-86BE E5           defb E5h
-86BF D5           defb D5h
-86C0 F5           defb F5h
-86C1 68           defb 68h
-86C2 26           defb 26h
-86C3 00           defb 00h
-86C4 29           defb 29h
-86C5 29           defb 29h
-86C6 29           defb 29h
-86C7 29           defb 29h
-86C8 29           defb 29h
-86C9 79           defb 79h
-86CA B5           defb B5h
-86CB 6F           defb 6Fh
-86CC 11           defb 11h
-86CD 00           defb 00h
-86CE 58           defb 58h
-86CF 19           defb 19h
-86D0 F1           defb F1h

@@ -14,7 +14,11 @@ SnakeDirection	DW	$0100
 
 
 ; ---------------------------------------------------------------------------
-start
+Start
+	di
+
+	call	SetInterrupts
+
 	; Clear the screen
 
 	ld	hl, $4000
@@ -29,6 +33,8 @@ start
 	ld	e, 0
 	call	Clear
 
+	ei
+Init
 	; Set our snake's initial position and step it while setting the grow flag to make it 3 long
 
 	ld	bc, $FF08
@@ -39,7 +45,6 @@ start
 	call	StepSnake
 	call	StepSnake
 
-Init
 	call	PlaceApple
 
 .loop
@@ -48,6 +53,11 @@ Init
 
 	call	DrawApple
 	call	DrawSnake
+
+	xor	a
+	call	StepSnake
+
+	halt
 	jr	.loop
 
 DrawApple
@@ -133,11 +143,11 @@ StepSnake
 	ret
 
 PlaceApple
-	call	rnd
+	call	Rnd
 	and	a, 31
 	ld	(ApplePos), a
 .lp
-	call	rnd
+	call	Rnd
 	and	a, 31
 	cp	a, 24
 	jr	nc, .lp
@@ -186,12 +196,12 @@ Plot
 
 	ret
 
-rnd
+Rnd
 	; Awesome randome number generator stolen from the internet
 
 	ld 	hl,0xA280   ; yw -> zt
         ld 	de,0xC0DE   ; xz -> yw
-        ld 	(rnd+4),hl  ; x = y, z = w
+        ld 	(Rnd+4),hl  ; x = y, z = w
         ld 	a,l         ; w = w ^ ( w << 3 )
         add	a,a
         add	a,a
@@ -207,7 +217,34 @@ rnd
         xor	l
         ld 	h,e         ; y = z
         ld 	l,a         ; w = t
-        ld 	(rnd+1),hl
+        ld 	(Rnd+1),hl
         ret
 
-	savesna "main.sna",start
+SetInterrupts
+	ld	hl, VectorTable
+	ld	de, IM2Routine
+	ld	b, 128
+
+	ld	a, h
+	ld	i, a
+.InterruptLP
+	ld	(hl), e
+	inc	hl
+	ld	(hl), d
+	inc	hl
+	djnz	.InterruptLP
+
+	im	2
+
+	ret
+IM2Routine
+	ei
+	reti
+
+; Make sure this is on a 256 byte boundary
+	ORG           $F000
+VectorTable
+        defs          256
+
+
+	savesna "main.sna",Start

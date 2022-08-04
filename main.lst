@@ -1,4 +1,4 @@
-# file opened: c:\Projects\Z80\main.asm
+# file opened: main.asm
   1   0000              		DEVICE ZXSPECTRUM48
   2   0000              		SLDOPT COMMENT WPMEM, LOGPOINT, ASSERTION, OUTPUT
   3   0000
@@ -15,202 +15,239 @@
  14   8608
  15   8608
  16   8608              ; ---------------------------------------------------------------------------
- 17   8608              start
- 18   8608              	; Clear the screen
- 19   8608
- 20   8608 21 00 40     	ld	hl, $4000
- 21   860B 01 00 18     	ld	bc, $1800
- 22   860E 1E 00        	ld	e, 0
- 23   8610 CD B6 86     	call	Clear
- 24   8613
- 25   8613              	; Clear the snake pos array
- 26   8613
- 27   8613 21 00 80     	ld	hl, SnakePosArray
- 28   8616 01 00 06     	ld	bc, SnakePosArrayEnd - SnakePosArray
- 29   8619 1E 00        	ld	e, 0
- 30   861B CD B6 86     	call	Clear
- 31   861E
- 32   861E              	; Set our snake's initial position and step it while setting the grow flag to make it 3 long
- 33   861E
- 34   861E 01 08 FF     	ld	bc, $FF08
- 35   8621 ED 43 04 86  	ld	(SnakeHeadPos), bc
- 36   8625
- 37   8625 3E 01        	ld	a, 1
- 38   8627 CD 5F 86     	call	StepSnake
- 39   862A CD 5F 86     	call	StepSnake
- 40   862D CD 5F 86     	call	StepSnake
- 41   8630
- 42   8630              Init
- 43   8630 CD 9E 86     	call	PlaceApple
- 44   8633
- 45   8633              .loop
- 46   8633 ED 5F             	ld	a,r
- 47   8635 D3 FE             	out	(254),a
- 48   8637
- 49   8637 CD 3F 86     	call	DrawApple
- 50   863A CD 49 86     	call	DrawSnake
- 51   863D 18 F4        	jr	.loop
- 52   863F
- 53   863F              DrawApple
- 54   863F ED 4B 02 86  	ld	bc,(ApplePos)
- 55   8643 3E 24        	ld	a, %00100100
- 56   8645 CD BE 86     	call	Plot
- 57   8648 C9           	ret
- 58   8649
- 59   8649              DrawSnake
- 60   8649 ED 5B 00 86  	ld	de, (SnakeLen)
- 61   864D 21 00 80     	ld	hl, SnakePosArray
- 62   8650              .lp
- 63   8650 4E           	ld	c, (hl)
- 64   8651 23           	inc	hl
- 65   8652 46           	ld	b, (hl)
- 66   8653 23           	inc	hl
- 67   8654
- 68   8654 3E 00        	ld	a, 0
- 69   8656 CD BE 86     	call	Plot
- 70   8659
- 71   8659 1B           	dec	de
- 72   865A 7A           	ld	a, d
- 73   865B B3           	or	e
- 74   865C 20 F2        	jr	nz, .lp
- 75   865E
- 76   865E C9           	ret
- 77   865F
- 78   865F              StepSnake
- 79   865F F5           	push	af
- 80   8660              	; move the snake in the current direction
- 81   8660              	; if a is non-zero then expand the snake
- 82   8660
- 83   8660              	; Do it the bad way (i.e. NOT using a circular buffer)
- 84   8660
- 85   8660 B7           	or	a
- 86   8661 20 13        	jr	nz, .skipMove
- 87   8663
- 88   8663 21 01 80     	ld	hl, SnakePosArray + 1
- 89   8666 11 00 80     	ld	de, SnakePosArray
- 90   8669 ED 4B 00 86  	ld	bc, (SnakeLen)
- 91   866D              .lp
- 92   866D 7E           	ld	a, (hl)
- 93   866E 12           	ld	(de), a
- 94   866F 23           	inc	hl
- 95   8670 13           	inc	de
- 96   8671 0B           	dec	bc
- 97   8672 78           	ld	a, b
- 98   8673 B1           	or	c
- 99   8674 20 F7        	jr	nz, .lp
-100   8676
-101   8676              .skipMove
-102   8676 2A 04 86     	ld	hl, (SnakeHeadPos)
-103   8679 ED 4B 06 86  	ld	bc, (SnakeDirection)
-104   867D
-105   867D              	; Add the direction to the position (do each byte separately so a carry on the X doesn't affect the Y etc.)
-106   867D 7D           	ld	a, l
-107   867E 81           	add	c
-108   867F 4F           	ld	c, A
-109   8680
-110   8680 7C           	ld	a, h
-111   8681 80           	add	b
-112   8682 47           	ld	b, a
-113   8683 ED 43 04 86  	ld	(SnakeHeadPos), bc
+ 17   8608              Start
+ 18   8608 F3           	di
+ 19   8609
+ 20   8609 CD FB 86     	call	SetInterrupts
+ 21   860C
+ 22   860C              	; Clear the screen
+ 23   860C
+ 24   860C 21 00 40     	ld	hl, $4000
+ 25   860F 01 00 18     	ld	bc, $1800
+ 26   8612 1E 00        	ld	e, 0
+ 27   8614 CD C0 86     	call	Clear
+ 28   8617
+ 29   8617              	; Clear the snake pos array
+ 30   8617
+ 31   8617 21 00 80     	ld	hl, SnakePosArray
+ 32   861A 01 00 06     	ld	bc, SnakePosArrayEnd - SnakePosArray
+ 33   861D 1E 00        	ld	e, 0
+ 34   861F CD C0 86     	call	Clear
+ 35   8622
+ 36   8622 FB           	ei
+ 37   8623              Init
+ 38   8623              	; Set our snake's initial position and step it while setting the grow flag to make it 3 long
+ 39   8623
+ 40   8623 01 08 FF     	ld	bc, $FF08
+ 41   8626 ED 43 04 86  	ld	(SnakeHeadPos), bc
+ 42   862A
+ 43   862A 3E 01        	ld	a, 1
+ 44   862C CD 69 86     	call	StepSnake
+ 45   862F CD 69 86     	call	StepSnake
+ 46   8632 CD 69 86     	call	StepSnake
+ 47   8635
+ 48   8635 CD A8 86     	call	PlaceApple
+ 49   8638
+ 50   8638              .loop
+ 51   8638 ED 5F             	ld	a,r
+ 52   863A D3 FE             	out	(254),a
+ 53   863C
+ 54   863C CD 49 86     	call	DrawApple
+ 55   863F CD 53 86     	call	DrawSnake
+ 56   8642
+ 57   8642 AF           	xor	a
+ 58   8643 CD 69 86     	call	StepSnake
+ 59   8646
+ 60   8646 76           	halt
+ 61   8647 18 EF        	jr	.loop
+ 62   8649
+ 63   8649              DrawApple
+ 64   8649 ED 4B 02 86  	ld	bc,(ApplePos)
+ 65   864D 3E 24        	ld	a, %00100100
+ 66   864F CD C8 86     	call	Plot
+ 67   8652 C9           	ret
+ 68   8653
+ 69   8653              DrawSnake
+ 70   8653 ED 5B 00 86  	ld	de, (SnakeLen)
+ 71   8657 21 00 80     	ld	hl, SnakePosArray
+ 72   865A              .lp
+ 73   865A 4E           	ld	c, (hl)
+ 74   865B 23           	inc	hl
+ 75   865C 46           	ld	b, (hl)
+ 76   865D 23           	inc	hl
+ 77   865E
+ 78   865E 3E 00        	ld	a, 0
+ 79   8660 CD C8 86     	call	Plot
+ 80   8663
+ 81   8663 1B           	dec	de
+ 82   8664 7A           	ld	a, d
+ 83   8665 B3           	or	e
+ 84   8666 20 F2        	jr	nz, .lp
+ 85   8668
+ 86   8668 C9           	ret
+ 87   8669
+ 88   8669              StepSnake
+ 89   8669 F5           	push	af
+ 90   866A              	; move the snake in the current direction
+ 91   866A              	; if a is non-zero then expand the snake
+ 92   866A
+ 93   866A              	; Do it the bad way (i.e. NOT using a circular buffer)
+ 94   866A
+ 95   866A B7           	or	a
+ 96   866B 20 13        	jr	nz, .skipMove
+ 97   866D
+ 98   866D 21 01 80     	ld	hl, SnakePosArray + 1
+ 99   8670 11 00 80     	ld	de, SnakePosArray
+100   8673 ED 4B 00 86  	ld	bc, (SnakeLen)
+101   8677              .lp
+102   8677 7E           	ld	a, (hl)
+103   8678 12           	ld	(de), a
+104   8679 23           	inc	hl
+105   867A 13           	inc	de
+106   867B 0B           	dec	bc
+107   867C 78           	ld	a, b
+108   867D B1           	or	c
+109   867E 20 F7        	jr	nz, .lp
+110   8680
+111   8680              .skipMove
+112   8680 2A 04 86     	ld	hl, (SnakeHeadPos)
+113   8683 ED 4B 06 86  	ld	bc, (SnakeDirection)
 114   8687
-115   8687 ED 5B 00 86  	ld	de, (SnakeLen)
-116   868B 21 00 80     	ld	hl, SnakePosArray
-117   868E 19           	add	hl, de
-118   868F 19           	add	hl, de
-119   8690
-120   8690 71           	ld	(hl), c
-121   8691 23           	inc	hl
-122   8692 70           	ld	(hl), b
-123   8693
-124   8693 F1           	pop	af
-125   8694
-126   8694 B7           	or	a
-127   8695 C8           	ret	z
-128   8696
-129   8696 2A 00 86     	ld	hl, (SnakeLen)
-130   8699 23           	inc	hl
-131   869A 22 00 86     	ld	(SnakeLen), hl
-132   869D
-133   869D C9           	ret
-134   869E
-135   869E              PlaceApple
-136   869E CD D5 86     	call	rnd
-137   86A1 A7 E6 1F     	and	a, 31
-138   86A4 32 02 86     	ld	(ApplePos), a
-139   86A7              .lp
-140   86A7 CD D5 86     	call	rnd
-141   86AA A7 E6 1F     	and	a, 31
-142   86AD BF FE 18     	cp	a, 24
-143   86B0 30 F5        	jr	nc, .lp
-144   86B2 32 03 86     	ld	(ApplePos+1), a
-145   86B5 C9           	ret
-146   86B6
-147   86B6              Clear
-148   86B6 73           	ld	(hl), e
-149   86B7 23           	inc	hl
-150   86B8 0B           	dec	bc
-151   86B9 78           	ld	a, b
-152   86BA B1           	or	c
-153   86BB 20 F9        	jr	nz, Clear
-154   86BD C9           	ret
-155   86BE
-156   86BE              Plot
-157   86BE              	; Plots a colour character at C = X, B = Y, A = colour
-158   86BE              	; doesn't corrupt BC, DE
-159   86BE              	; corrupts A
-160   86BE
-161   86BE E5           	push	hl
-162   86BF D5           	push	de
-163   86C0 F5           	push	af
-164   86C1
-165   86C1 68           	ld	l, b	; Load the HL register pair with the Y pos
-166   86C2 26 00        	ld	h, 0
-167   86C4 29           	add	hl, hl	; Multiply it by 32 (raise to the power of 5 by doubling)
-168   86C5 29           	add	hl, hl
-169   86C6 29           	add	hl, hl
-170   86C7 29           	add	hl, hl
-171   86C8 29           	add	hl, hl
-172   86C9
-173   86C9 79           	ld	a, c	; Get the X pos and OR it into L
-174   86CA B5           	or	l
-175   86CB 6F           	ld	l, a
-176   86CC
-177   86CC 11 00 58     	ld	de, $5800	; Ass the base address of the attribute map
-178   86CF 19           	add	hl, de
-179   86D0
-180   86D0 F1           	pop	af
-181   86D1
-182   86D1 77           	ld	(hl), a	; write the value
-183   86D2
-184   86D2 D1           	pop	de
-185   86D3 E1           	pop	hl
-186   86D4
-187   86D4 C9           	ret
-188   86D5
-189   86D5              rnd
-190   86D5              	; Awesome randome number generator stolen from the internet
-191   86D5
-192   86D5 21 80 A2     	ld 	hl,0xA280   ; yw -> zt
-193   86D8 11 DE C0             ld 	de,0xC0DE   ; xz -> yw
-194   86DB 22 D9 86             ld 	(rnd+4),hl  ; x = y, z = w
-195   86DE 7D                   ld 	a,l         ; w = w ^ ( w << 3 )
-196   86DF 87                   add	a,a
-197   86E0 87                   add	a,a
-198   86E1 87                   add	a,a
-199   86E2 AD                   xor	l
-200   86E3 6F                   ld 	l,a
-201   86E4 7A                   ld 	a,d         ; t = x ^ (x << 1)
-202   86E5 87                   add	a,a
-203   86E6 AA                   xor	d
-204   86E7 67                   ld 	h,a
-205   86E8 1F                   rra  	           ; t = t ^ (t >> 1) ^ w
-206   86E9 AC                   xor	h
-207   86EA AD                   xor	l
-208   86EB 63                   ld 	h,e         ; y = z
-209   86EC 6F                   ld 	l,a         ; w = t
-210   86ED 22 D6 86             ld 	(rnd+1),hl
-211   86F0 C9                   ret
-212   86F1
-213   86F1              	savesna "main.sna",start
-214   86F1
-# file closed: c:\Projects\Z80\main.asm
+115   8687              	; Add the direction to the position (do each byte separately so a carry on the X doesn't affect the Y etc.)
+116   8687 7D           	ld	a, l
+117   8688 81           	add	c
+118   8689 4F           	ld	c, A
+119   868A
+120   868A 7C           	ld	a, h
+121   868B 80           	add	b
+122   868C 47           	ld	b, a
+123   868D ED 43 04 86  	ld	(SnakeHeadPos), bc
+124   8691
+125   8691 ED 5B 00 86  	ld	de, (SnakeLen)
+126   8695 21 00 80     	ld	hl, SnakePosArray
+127   8698 19           	add	hl, de
+128   8699 19           	add	hl, de
+129   869A
+130   869A 71           	ld	(hl), c
+131   869B 23           	inc	hl
+132   869C 70           	ld	(hl), b
+133   869D
+134   869D F1           	pop	af
+135   869E
+136   869E B7           	or	a
+137   869F C8           	ret	z
+138   86A0
+139   86A0 2A 00 86     	ld	hl, (SnakeLen)
+140   86A3 23           	inc	hl
+141   86A4 22 00 86     	ld	(SnakeLen), hl
+142   86A7
+143   86A7 C9           	ret
+144   86A8
+145   86A8              PlaceApple
+146   86A8 CD DF 86     	call	Rnd
+147   86AB A7 E6 1F     	and	a, 31
+148   86AE 32 02 86     	ld	(ApplePos), a
+149   86B1              .lp
+150   86B1 CD DF 86     	call	Rnd
+151   86B4 A7 E6 1F     	and	a, 31
+152   86B7 BF FE 18     	cp	a, 24
+153   86BA 30 F5        	jr	nc, .lp
+154   86BC 32 03 86     	ld	(ApplePos+1), a
+155   86BF C9           	ret
+156   86C0
+157   86C0              Clear
+158   86C0 73           	ld	(hl), e
+159   86C1 23           	inc	hl
+160   86C2 0B           	dec	bc
+161   86C3 78           	ld	a, b
+162   86C4 B1           	or	c
+163   86C5 20 F9        	jr	nz, Clear
+164   86C7 C9           	ret
+165   86C8
+166   86C8              Plot
+167   86C8              	; Plots a colour character at C = X, B = Y, A = colour
+168   86C8              	; doesn't corrupt BC, DE
+169   86C8              	; corrupts A
+170   86C8
+171   86C8 E5           	push	hl
+172   86C9 D5           	push	de
+173   86CA F5           	push	af
+174   86CB
+175   86CB 68           	ld	l, b	; Load the HL register pair with the Y pos
+176   86CC 26 00        	ld	h, 0
+177   86CE 29           	add	hl, hl	; Multiply it by 32 (raise to the power of 5 by doubling)
+178   86CF 29           	add	hl, hl
+179   86D0 29           	add	hl, hl
+180   86D1 29           	add	hl, hl
+181   86D2 29           	add	hl, hl
+182   86D3
+183   86D3 79           	ld	a, c	; Get the X pos and OR it into L
+184   86D4 B5           	or	l
+185   86D5 6F           	ld	l, a
+186   86D6
+187   86D6 11 00 58     	ld	de, $5800	; Ass the base address of the attribute map
+188   86D9 19           	add	hl, de
+189   86DA
+190   86DA F1           	pop	af
+191   86DB
+192   86DB 77           	ld	(hl), a	; write the value
+193   86DC
+194   86DC D1           	pop	de
+195   86DD E1           	pop	hl
+196   86DE
+197   86DE C9           	ret
+198   86DF
+199   86DF              Rnd
+200   86DF              	; Awesome randome number generator stolen from the internet
+201   86DF
+202   86DF 21 80 A2     	ld 	hl,0xA280   ; yw -> zt
+203   86E2 11 DE C0             ld 	de,0xC0DE   ; xz -> yw
+204   86E5 22 E3 86             ld 	(Rnd+4),hl  ; x = y, z = w
+205   86E8 7D                   ld 	a,l         ; w = w ^ ( w << 3 )
+206   86E9 87                   add	a,a
+207   86EA 87                   add	a,a
+208   86EB 87                   add	a,a
+209   86EC AD                   xor	l
+210   86ED 6F                   ld 	l,a
+211   86EE 7A                   ld 	a,d         ; t = x ^ (x << 1)
+212   86EF 87                   add	a,a
+213   86F0 AA                   xor	d
+214   86F1 67                   ld 	h,a
+215   86F2 1F                   rra  	           ; t = t ^ (t >> 1) ^ w
+216   86F3 AC                   xor	h
+217   86F4 AD                   xor	l
+218   86F5 63                   ld 	h,e         ; y = z
+219   86F6 6F                   ld 	l,a         ; w = t
+220   86F7 22 E0 86             ld 	(Rnd+1),hl
+221   86FA C9                   ret
+222   86FB
+223   86FB              SetInterrupts
+224   86FB 21 00 F0     	ld	hl, VectorTable
+225   86FE 11 0F 87     	ld	de, IM2Routine
+226   8701 06 80        	ld	b, 128
+227   8703
+228   8703 7C           	ld	a, h
+229   8704 ED 47        	ld	i, a
+230   8706              .InterruptLP
+231   8706 73           	ld	(hl), e
+232   8707 23           	inc	hl
+233   8708 72           	ld	(hl), d
+234   8709 23           	inc	hl
+235   870A 10 FA        	djnz	.InterruptLP
+236   870C
+237   870C ED 5E        	im	2
+238   870E
+239   870E C9           	ret
+240   870F              IM2Routine
+241   870F FB           	ei
+242   8710 ED 4D        	reti
+243   8712
+244   8712              ; Make sure this is on a 256 byte boundary
+245   8712              	ORG           $F000
+246   F000              VectorTable
+247   F000 00 00 00...          defs          256
+248   F100
+249   F100
+250   F100              	savesna "main.sna",Start
+251   F100
+# file closed: main.asm
