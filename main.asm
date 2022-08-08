@@ -95,14 +95,23 @@ StepSnake
 	or	a
 	jr	nz, .skipMove
 
-	ld	hl, SnakePosArray + 1
+	ld	hl, SnakePosArray + 2
 	ld	de, SnakePosArray
 	ld	bc, (SnakeLen)
 .lp
+
+// move xpos
 	ld	a, (hl)
 	ld	(de), a
 	inc	hl
 	inc	de
+
+// mode ypos
+	ld	a, (hl)
+	ld	(de), a
+	inc	hl
+	inc	de
+
 	dec	bc
 	ld	a, b
 	or	c

@@ -11,6 +11,7 @@ L5C0B:       equ  5C0Bh
 L5C16:       equ  5C16h
 L5C3A:       equ  5C3Ah
 L5C45:       equ  5C45h
+L865A:       equ  865Ah
 
 
              org 1300h
@@ -58,3 +59,67 @@ L5C45:       equ  5C45h
 135D 06 00        LD   B,00h
 135F CD 1B 1A     CALL L1A1B
 1362 CD 97 00     CALL L0097
+
+
+             org 8663h
+
+
+8663 L8663:
+8663 1B           DEC  DE
+8664 7A           LD   A,D
+8665 B3           OR   E
+8666 20 F2        JR   NZ,L865A
+8668 C9           RET
+
+
+8669 F5           defb F5h
+866A B7           defb B7h
+866B 20           defb 20h
+866C 17           defb 17h
+866D 21           defb 21h
+866E 02           defb 02h
+866F 80           defb 80h
+8670 11           defb 11h
+8671 00           defb 00h
+8672 80           defb 80h
+8673 ED           defb EDh
+8674 4B           defb 4Bh
+8675 00           defb 00h
+8676 86           defb 86h
+8677 7E           defb 7Eh
+8678 12           defb 12h
+8679 23           defb 23h
+867A 13           defb 13h
+867B 7E           defb 7Eh
+
+
+             org 86DEh
+
+
+86DE L86DE:
+86DE F1           POP  AF
+86DF 77           LD   (HL),A
+86E0 D1           POP  DE
+86E1 E1           POP  HL
+86E2 C9           RET
+
+
+86E3 21           defb 21h
+86E4 75           defb 75h
+86E5 80           defb 80h
+86E6 11           defb 11h
+86E7 E0           defb E0h
+86E8 DE           defb DEh
+86E9 22           defb 22h
+86EA E7           defb E7h
+86EB 86           defb 86h
+86EC 7D           defb 7Dh
+86ED 87           defb 87h
+86EE 87           defb 87h
+86EF 87           defb 87h
+86F0 AD           defb ADh
+86F1 6F           defb 6Fh
+86F2 7A           defb 7Ah
+86F3 87           defb 87h
+86F4 AA           defb AAh
+86F5 67           defb 67h

@@ -1,120 +1,319 @@
 # file opened: c:\Projects\Z80-Snake\.tmp\disasm.list
- 1    0000              L0010:       equ  0010h
- 2    0000              L0097:       equ  0097h
- 3    0000              L0C0A:       equ  0C0Ah
- 4    0000              L0D6E:       equ  0D6Eh
- 5    0000              L0ECD:       equ  0ECDh
- 6    0000              L15EF:       equ  15EFh
- 7    0000              L16B0:       equ  16B0h
- 8    0000              L1A1B:       equ  1A1Bh
- 9    0000              L1B8A:       equ  1B8Ah
-10    0000              L5C0B:       equ  5C0Bh
-11    0000              L5C16:       equ  5C16h
-12    0000              L5C3A:       equ  5C3Ah
-13    0000              L5C45:       equ  5C45h
-14    0000
-15    0000
-16    0000                           org 1300h
-17    1300
-18    1300
-c:\Projects\Z80-Snake\.tmp\disasm.list(19): error: Unrecognized instruction: L1300
-19    1300              1300 L1300
-19    1300
-c:\Projects\Z80-Snake\.tmp\disasm.list(20): error: Unrecognized instruction: CD 8A 1B     CALL L1B8A
-20    1300              1300 CD 8A 1B     CALL L1B8A
-c:\Projects\Z80-Snake\.tmp\disasm.list(21): error: Unrecognized instruction: 76           HALT
-21    1300              1303 76           HALT
-c:\Projects\Z80-Snake\.tmp\disasm.list(22): error: Unrecognized instruction: FD CB 01 AE  RES  5,(IY+1)
-22    1300              1304 FD CB 01 AE  RES  5,(IY+1)
-c:\Projects\Z80-Snake\.tmp\disasm.list(23): error: Unrecognized instruction: FD CB 30 4E  BIT  1,(IY+48)
-23    1300              1308 FD CB 30 4E  BIT  1,(IY+48)
-c:\Projects\Z80-Snake\.tmp\disasm.list(24): error: Invalid temporary label (not a number): 130C
-c:\Projects\Z80-Snake\.tmp\disasm.list(24): error: Unrecognized instruction: C4 CD 0E     CALL NZ,L0ECD
-24    1300              130C C4 CD 0E     CALL NZ,L0ECD
-c:\Projects\Z80-Snake\.tmp\disasm.list(25): error: Invalid temporary label (not a number): 130F
-c:\Projects\Z80-Snake\.tmp\disasm.list(25): error: Unrecognized instruction: 3A 3A 5C     LD   A,(L5C3A)
-25    1300              130F 3A 3A 5C     LD   A,(L5C3A)
-c:\Projects\Z80-Snake\.tmp\disasm.list(26): error: Unrecognized instruction: 3C           INC  A
-26    1300              1312 3C           INC  A
-c:\Projects\Z80-Snake\.tmp\disasm.list(27): error: Unrecognized instruction: F5           PUSH AF
-27    1300              1313 F5           PUSH AF
-c:\Projects\Z80-Snake\.tmp\disasm.list(28): error: Unrecognized instruction: 21 00 00     LD   HL,0000h
-28    1300              1314 21 00 00     LD   HL,0000h
-c:\Projects\Z80-Snake\.tmp\disasm.list(29): error: Unrecognized instruction: FD 74 37     LD   (IY+55),H
-29    1300              1317 FD 74 37     LD   (IY+55),H
-c:\Projects\Z80-Snake\.tmp\disasm.list(30): error: Invalid temporary label (not a number): 131A
-c:\Projects\Z80-Snake\.tmp\disasm.list(30): error: Unrecognized instruction: FD 74 26     LD   (IY+38),H
-30    1300              131A FD 74 26     LD   (IY+38),H
-c:\Projects\Z80-Snake\.tmp\disasm.list(31): error: Invalid temporary label (not a number): 131D
-c:\Projects\Z80-Snake\.tmp\disasm.list(31): error: Unrecognized instruction: 22 0B 5C     LD   (L5C0B),HL
-31    1300              131D 22 0B 5C     LD   (L5C0B),HL
-c:\Projects\Z80-Snake\.tmp\disasm.list(32): error: Unrecognized instruction: 21 01 00     LD   HL,0001h
-32    1300              1320 21 01 00     LD   HL,0001h
-c:\Projects\Z80-Snake\.tmp\disasm.list(33): error: Unrecognized instruction: 22 16 5C     LD   (L5C16),HL
-33    1300              1323 22 16 5C     LD   (L5C16),HL
-c:\Projects\Z80-Snake\.tmp\disasm.list(34): error: Unrecognized instruction: CD B0 16     CALL L16B0
-34    1300              1326 CD B0 16     CALL L16B0
-c:\Projects\Z80-Snake\.tmp\disasm.list(35): error: Unrecognized instruction: FD CB 37 AE  RES  5,(IY+55)
-35    1300              1329 FD CB 37 AE  RES  5,(IY+55)
-c:\Projects\Z80-Snake\.tmp\disasm.list(36): error: Invalid temporary label (not a number): 132D
-c:\Projects\Z80-Snake\.tmp\disasm.list(36): error: Unrecognized instruction: CD 6E 0D     CALL L0D6E
-36    1300              132D CD 6E 0D     CALL L0D6E
-c:\Projects\Z80-Snake\.tmp\disasm.list(37): error: Unrecognized instruction: FD CB 02 EE  SET  5,(IY+2)
-37    1300              1330 FD CB 02 EE  SET  5,(IY+2)
-c:\Projects\Z80-Snake\.tmp\disasm.list(38): error: Unrecognized instruction: F1           POP  AF
-38    1300              1334 F1           POP  AF
-c:\Projects\Z80-Snake\.tmp\disasm.list(39): error: Unrecognized instruction: 47           LD   B,A
-39    1300              1335 47           LD   B,A
-c:\Projects\Z80-Snake\.tmp\disasm.list(40): error: Unrecognized instruction: FE 0A        CP   0Ah
-40    1300              1336 FE 0A        CP   0Ah
-c:\Projects\Z80-Snake\.tmp\disasm.list(41): error: Unrecognized instruction: 38 02        JR   C,L133C
-41    1300              1338 38 02        JR   C,L133C
-c:\Projects\Z80-Snake\.tmp\disasm.list(42): error: Invalid temporary label (not a number): 133A
-c:\Projects\Z80-Snake\.tmp\disasm.list(42): error: Unrecognized instruction: C6 07        ADD  A,07h
-42    1300              133A C6 07        ADD  A,07h
-c:\Projects\Z80-Snake\.tmp\disasm.list(43): error: Invalid temporary label (not a number): 133C
-c:\Projects\Z80-Snake\.tmp\disasm.list(43): error: Unrecognized instruction: L133C
-43    1300              133C L133C
-43    1300
+  1   0000              L0010:       equ  0010h
+  2   0000              L0097:       equ  0097h
+  3   0000              L0C0A:       equ  0C0Ah
+  4   0000              L0D6E:       equ  0D6Eh
+  5   0000              L0ECD:       equ  0ECDh
+  6   0000              L15EF:       equ  15EFh
+  7   0000              L16B0:       equ  16B0h
+  8   0000              L1A1B:       equ  1A1Bh
+  9   0000              L1B8A:       equ  1B8Ah
+ 10   0000              L5C0B:       equ  5C0Bh
+ 11   0000              L5C16:       equ  5C16h
+ 12   0000              L5C3A:       equ  5C3Ah
+ 13   0000              L5C45:       equ  5C45h
+ 14   0000              L865A:       equ  865Ah
+ 15   0000
+ 16   0000
+ 17   0000                           org 1300h
+ 18   1300
+ 19   1300
+c:\Projects\Z80-Snake\.tmp\disasm.list(20): error: Unrecognized instruction: L1300
+ 20   1300              1300 L1300
+ 20   1300
+c:\Projects\Z80-Snake\.tmp\disasm.list(21): error: Unrecognized instruction: CD 8A 1B     CALL L1B8A
+ 21   1300              1300 CD 8A 1B     CALL L1B8A
+c:\Projects\Z80-Snake\.tmp\disasm.list(22): error: Unrecognized instruction: 76           HALT
+c:\Projects\Z80-Snake\.tmp\disasm.list(22): error: Unexpected: 76           HALT
+ 22   1300              1303 76           HALT
+c:\Projects\Z80-Snake\.tmp\disasm.list(23): error: Unrecognized instruction: FD CB 01 AE  RES  5,(IY+1)
+ 23   1300              1304 FD CB 01 AE  RES  5,(IY+1)
+c:\Projects\Z80-Snake\.tmp\disasm.list(24): error: Unrecognized instruction: FD CB 30 4E  BIT  1,(IY+48)
+ 24   1300              1308 FD CB 30 4E  BIT  1,(IY+48)
+c:\Projects\Z80-Snake\.tmp\disasm.list(25): error: Invalid temporary label (not a number): 130C
+c:\Projects\Z80-Snake\.tmp\disasm.list(25): error: Unrecognized instruction: C4 CD 0E     CALL NZ,L0ECD
+ 25   1300              130C C4 CD 0E     CALL NZ,L0ECD
+c:\Projects\Z80-Snake\.tmp\disasm.list(26): error: Invalid temporary label (not a number): 130F
+c:\Projects\Z80-Snake\.tmp\disasm.list(26): error: Unrecognized instruction: 3A 3A 5C     LD   A,(L5C3A)
+c:\Projects\Z80-Snake\.tmp\disasm.list(26): error: Unexpected: 3A 3A 5C     LD   A,(L5C3A)
+ 26   1300              130F 3A 3A 5C     LD   A,(L5C3A)
+c:\Projects\Z80-Snake\.tmp\disasm.list(27): error: Unrecognized instruction: 3C           INC  A
+c:\Projects\Z80-Snake\.tmp\disasm.list(27): error: Unexpected: 3C           INC  A
+ 27   1300              1312 3C           INC  A
+c:\Projects\Z80-Snake\.tmp\disasm.list(28): error: Unrecognized instruction: F5           PUSH AF
+ 28   1300              1313 F5           PUSH AF
+c:\Projects\Z80-Snake\.tmp\disasm.list(29): error: Unrecognized instruction: 21 00 00     LD   HL,0000h
+c:\Projects\Z80-Snake\.tmp\disasm.list(29): error: Unexpected: 21 00 00     LD   HL,0000h
+ 29   1300              1314 21 00 00     LD   HL,0000h
+c:\Projects\Z80-Snake\.tmp\disasm.list(30): error: Unrecognized instruction: FD 74 37     LD   (IY+55),H
+ 30   1300              1317 FD 74 37     LD   (IY+55),H
+c:\Projects\Z80-Snake\.tmp\disasm.list(31): error: Invalid temporary label (not a number): 131A
+c:\Projects\Z80-Snake\.tmp\disasm.list(31): error: Unrecognized instruction: FD 74 26     LD   (IY+38),H
+ 31   1300              131A FD 74 26     LD   (IY+38),H
+c:\Projects\Z80-Snake\.tmp\disasm.list(32): error: Invalid temporary label (not a number): 131D
+c:\Projects\Z80-Snake\.tmp\disasm.list(32): error: Unrecognized instruction: 22 0B 5C     LD   (L5C0B),HL
+c:\Projects\Z80-Snake\.tmp\disasm.list(32): error: Unexpected: 22 0B 5C     LD   (L5C0B),HL
+ 32   1300              131D 22 0B 5C     LD   (L5C0B),HL
+c:\Projects\Z80-Snake\.tmp\disasm.list(33): error: Unrecognized instruction: 21 01 00     LD   HL,0001h
+c:\Projects\Z80-Snake\.tmp\disasm.list(33): error: Unexpected: 21 01 00     LD   HL,0001h
+ 33   1300              1320 21 01 00     LD   HL,0001h
+c:\Projects\Z80-Snake\.tmp\disasm.list(34): error: Unrecognized instruction: 22 16 5C     LD   (L5C16),HL
+c:\Projects\Z80-Snake\.tmp\disasm.list(34): error: Unexpected: 22 16 5C     LD   (L5C16),HL
+ 34   1300              1323 22 16 5C     LD   (L5C16),HL
+c:\Projects\Z80-Snake\.tmp\disasm.list(35): error: Unrecognized instruction: CD B0 16     CALL L16B0
+ 35   1300              1326 CD B0 16     CALL L16B0
+c:\Projects\Z80-Snake\.tmp\disasm.list(36): error: Unrecognized instruction: FD CB 37 AE  RES  5,(IY+55)
+ 36   1300              1329 FD CB 37 AE  RES  5,(IY+55)
+c:\Projects\Z80-Snake\.tmp\disasm.list(37): error: Invalid temporary label (not a number): 132D
+c:\Projects\Z80-Snake\.tmp\disasm.list(37): error: Unrecognized instruction: CD 6E 0D     CALL L0D6E
+ 37   1300              132D CD 6E 0D     CALL L0D6E
+c:\Projects\Z80-Snake\.tmp\disasm.list(38): error: Unrecognized instruction: FD CB 02 EE  SET  5,(IY+2)
+ 38   1300              1330 FD CB 02 EE  SET  5,(IY+2)
+c:\Projects\Z80-Snake\.tmp\disasm.list(39): error: Unrecognized instruction: F1           POP  AF
+ 39   1300              1334 F1           POP  AF
+c:\Projects\Z80-Snake\.tmp\disasm.list(40): error: Unrecognized instruction: 47           LD   B,A
+c:\Projects\Z80-Snake\.tmp\disasm.list(40): error: Unexpected: 47           LD   B,A
+ 40   1300              1335 47           LD   B,A
+c:\Projects\Z80-Snake\.tmp\disasm.list(41): error: Unrecognized instruction: FE 0A        CP   0Ah
+ 41   1300              1336 FE 0A        CP   0Ah
+c:\Projects\Z80-Snake\.tmp\disasm.list(42): error: Unrecognized instruction: 38 02        JR   C,L133C
+c:\Projects\Z80-Snake\.tmp\disasm.list(42): error: Unexpected: 38 02        JR   C,L133C
+ 42   1300              1338 38 02        JR   C,L133C
+c:\Projects\Z80-Snake\.tmp\disasm.list(43): error: Invalid temporary label (not a number): 133A
+c:\Projects\Z80-Snake\.tmp\disasm.list(43): error: Unrecognized instruction: C6 07        ADD  A,07h
+ 43   1300              133A C6 07        ADD  A,07h
 c:\Projects\Z80-Snake\.tmp\disasm.list(44): error: Invalid temporary label (not a number): 133C
-c:\Projects\Z80-Snake\.tmp\disasm.list(44): error: Unrecognized instruction: CD EF 15     CALL L15EF
-44    1300              133C CD EF 15     CALL L15EF
-c:\Projects\Z80-Snake\.tmp\disasm.list(45): error: Invalid temporary label (not a number): 133F
-c:\Projects\Z80-Snake\.tmp\disasm.list(45): error: Unrecognized instruction: 3E 20        LD   A,20h
-45    1300              133F 3E 20        LD   A,20h
-c:\Projects\Z80-Snake\.tmp\disasm.list(46): error: Unrecognized instruction: D7           RST  10h
-46    1300              1341 D7           RST  10h
-c:\Projects\Z80-Snake\.tmp\disasm.list(47): error: Unrecognized instruction: 78           LD   A,B
-47    1300              1342 78           LD   A,B
-c:\Projects\Z80-Snake\.tmp\disasm.list(48): error: Unrecognized instruction: 11 91 13     LD   DE,1391h
-48    1300              1343 11 91 13     LD   DE,1391h
-c:\Projects\Z80-Snake\.tmp\disasm.list(49): error: Unrecognized instruction: CD 0A 0C     CALL L0C0A
-49    1300              1346 CD 0A 0C     CALL L0C0A
-c:\Projects\Z80-Snake\.tmp\disasm.list(50): error: Unrecognized instruction: AF           XOR  A
-50    1300              1349 AF           XOR  A
-c:\Projects\Z80-Snake\.tmp\disasm.list(51): error: Invalid temporary label (not a number): 134A
-c:\Projects\Z80-Snake\.tmp\disasm.list(51): error: Unrecognized instruction: 11 36 15     LD   DE,1536h
-51    1300              134A 11 36 15     LD   DE,1536h
-c:\Projects\Z80-Snake\.tmp\disasm.list(52): error: Invalid temporary label (not a number): 134D
-c:\Projects\Z80-Snake\.tmp\disasm.list(52): error: Unrecognized instruction: CD 0A 0C     CALL L0C0A
-52    1300              134D CD 0A 0C     CALL L0C0A
-c:\Projects\Z80-Snake\.tmp\disasm.list(53): error: Unrecognized instruction: ED 4B 45 5C  LD   BC,(L5C45)
-53    1300              1350 ED 4B 45 5C  LD   BC,(L5C45)
-c:\Projects\Z80-Snake\.tmp\disasm.list(54): error: Unrecognized instruction: CD 1B 1A     CALL L1A1B
-54    1300              1354 CD 1B 1A     CALL L1A1B
-c:\Projects\Z80-Snake\.tmp\disasm.list(55): error: Unrecognized instruction: 3E 3A        LD   A,3Ah
-55    1300              1357 3E 3A        LD   A,3Ah
-c:\Projects\Z80-Snake\.tmp\disasm.list(56): error: Unrecognized instruction: D7           RST  10h
-56    1300              1359 D7           RST  10h
-c:\Projects\Z80-Snake\.tmp\disasm.list(57): error: Invalid temporary label (not a number): 135A
-c:\Projects\Z80-Snake\.tmp\disasm.list(57): error: Unrecognized instruction: FD 4E 0D     LD   C,(IY+13)
-57    1300              135A FD 4E 0D     LD   C,(IY+13)
-c:\Projects\Z80-Snake\.tmp\disasm.list(58): error: Invalid temporary label (not a number): 135D
-c:\Projects\Z80-Snake\.tmp\disasm.list(58): error: Unrecognized instruction: 06 00        LD   B,00h
-58    1300              135D 06 00        LD   B,00h
-c:\Projects\Z80-Snake\.tmp\disasm.list(59): error: Invalid temporary label (not a number): 135F
-c:\Projects\Z80-Snake\.tmp\disasm.list(59): error: Unrecognized instruction: CD 1B 1A     CALL L1A1B
-59    1300              135F CD 1B 1A     CALL L1A1B
-c:\Projects\Z80-Snake\.tmp\disasm.list(60): error: Unrecognized instruction: CD 97 00     CALL L0097
-60    1300              1362 CD 97 00     CALL L0097
+c:\Projects\Z80-Snake\.tmp\disasm.list(44): error: Unrecognized instruction: L133C
+ 44   1300              133C L133C
+ 44   1300
+c:\Projects\Z80-Snake\.tmp\disasm.list(45): error: Invalid temporary label (not a number): 133C
+c:\Projects\Z80-Snake\.tmp\disasm.list(45): error: Unrecognized instruction: CD EF 15     CALL L15EF
+ 45   1300              133C CD EF 15     CALL L15EF
+c:\Projects\Z80-Snake\.tmp\disasm.list(46): error: Invalid temporary label (not a number): 133F
+c:\Projects\Z80-Snake\.tmp\disasm.list(46): error: Unrecognized instruction: 3E 20        LD   A,20h
+c:\Projects\Z80-Snake\.tmp\disasm.list(46): error: Unexpected: 3E 20        LD   A,20h
+ 46   1300              133F 3E 20        LD   A,20h
+c:\Projects\Z80-Snake\.tmp\disasm.list(47): error: Unrecognized instruction: D7           RST  10h
+ 47   1300              1341 D7           RST  10h
+c:\Projects\Z80-Snake\.tmp\disasm.list(48): error: Unrecognized instruction: 78           LD   A,B
+c:\Projects\Z80-Snake\.tmp\disasm.list(48): error: Unexpected: 78           LD   A,B
+ 48   1300              1342 78           LD   A,B
+c:\Projects\Z80-Snake\.tmp\disasm.list(49): error: Unrecognized instruction: 11 91 13     LD   DE,1391h
+c:\Projects\Z80-Snake\.tmp\disasm.list(49): error: Unexpected: 11 91 13     LD   DE,1391h
+ 49   1300              1343 11 91 13     LD   DE,1391h
+c:\Projects\Z80-Snake\.tmp\disasm.list(50): error: Unrecognized instruction: CD 0A 0C     CALL L0C0A
+ 50   1300              1346 CD 0A 0C     CALL L0C0A
+c:\Projects\Z80-Snake\.tmp\disasm.list(51): error: Unrecognized instruction: AF           XOR  A
+ 51   1300              1349 AF           XOR  A
+c:\Projects\Z80-Snake\.tmp\disasm.list(52): error: Invalid temporary label (not a number): 134A
+c:\Projects\Z80-Snake\.tmp\disasm.list(52): error: Unrecognized instruction: 11 36 15     LD   DE,1536h
+c:\Projects\Z80-Snake\.tmp\disasm.list(52): error: Unexpected: 11 36 15     LD   DE,1536h
+ 52   1300              134A 11 36 15     LD   DE,1536h
+c:\Projects\Z80-Snake\.tmp\disasm.list(53): error: Invalid temporary label (not a number): 134D
+c:\Projects\Z80-Snake\.tmp\disasm.list(53): error: Unrecognized instruction: CD 0A 0C     CALL L0C0A
+ 53   1300              134D CD 0A 0C     CALL L0C0A
+c:\Projects\Z80-Snake\.tmp\disasm.list(54): error: Unrecognized instruction: ED 4B 45 5C  LD   BC,(L5C45)
+ 54   1300              1350 ED 4B 45 5C  LD   BC,(L5C45)
+c:\Projects\Z80-Snake\.tmp\disasm.list(55): error: Unrecognized instruction: CD 1B 1A     CALL L1A1B
+ 55   1300              1354 CD 1B 1A     CALL L1A1B
+c:\Projects\Z80-Snake\.tmp\disasm.list(56): error: Unrecognized instruction: 3E 3A        LD   A,3Ah
+c:\Projects\Z80-Snake\.tmp\disasm.list(56): error: Unexpected: 3E 3A        LD   A,3Ah
+ 56   1300              1357 3E 3A        LD   A,3Ah
+c:\Projects\Z80-Snake\.tmp\disasm.list(57): error: Unrecognized instruction: D7           RST  10h
+ 57   1300              1359 D7           RST  10h
+c:\Projects\Z80-Snake\.tmp\disasm.list(58): error: Invalid temporary label (not a number): 135A
+c:\Projects\Z80-Snake\.tmp\disasm.list(58): error: Unrecognized instruction: FD 4E 0D     LD   C,(IY+13)
+ 58   1300              135A FD 4E 0D     LD   C,(IY+13)
+c:\Projects\Z80-Snake\.tmp\disasm.list(59): error: Invalid temporary label (not a number): 135D
+c:\Projects\Z80-Snake\.tmp\disasm.list(59): error: Unrecognized instruction: 06 00        LD   B,00h
+c:\Projects\Z80-Snake\.tmp\disasm.list(59): error: Unexpected: 06 00        LD   B,00h
+ 59   1300              135D 06 00        LD   B,00h
+c:\Projects\Z80-Snake\.tmp\disasm.list(60): error: Invalid temporary label (not a number): 135F
+c:\Projects\Z80-Snake\.tmp\disasm.list(60): error: Unrecognized instruction: CD 1B 1A     CALL L1A1B
+ 60   1300              135F CD 1B 1A     CALL L1A1B
+c:\Projects\Z80-Snake\.tmp\disasm.list(61): error: Unrecognized instruction: CD 97 00     CALL L0097
+ 61   1300              1362 CD 97 00     CALL L0097
+ 62   1300
+ 63   1300
+ 64   1300                           org 8663h
+ 65   8663
+ 66   8663
+c:\Projects\Z80-Snake\.tmp\disasm.list(67): error: Unrecognized instruction: L8663
+ 67   8663              8663 L8663
+ 67   8663
+c:\Projects\Z80-Snake\.tmp\disasm.list(68): error: Unrecognized instruction: 1B           DEC  DE
+c:\Projects\Z80-Snake\.tmp\disasm.list(68): error: Unexpected: 1B           DEC  DE
+ 68   8663              8663 1B           DEC  DE
+c:\Projects\Z80-Snake\.tmp\disasm.list(69): error: Unrecognized instruction: 7A           LD   A,D
+c:\Projects\Z80-Snake\.tmp\disasm.list(69): error: Unexpected: 7A           LD   A,D
+ 69   8663              8664 7A           LD   A,D
+c:\Projects\Z80-Snake\.tmp\disasm.list(70): error: Unrecognized instruction: B3           OR   E
+ 70   8663              8665 B3           OR   E
+c:\Projects\Z80-Snake\.tmp\disasm.list(71): error: Unrecognized instruction: 20 F2        JR   NZ,L865A
+c:\Projects\Z80-Snake\.tmp\disasm.list(71): error: Unexpected: 20 F2        JR   NZ,L865A
+ 71   8663              8666 20 F2        JR   NZ,L865A
+c:\Projects\Z80-Snake\.tmp\disasm.list(72): error: Unrecognized instruction: C9           RET
+ 72   8663              8668 C9           RET
+ 73   8663
+ 74   8663
+c:\Projects\Z80-Snake\.tmp\disasm.list(75): error: Unrecognized instruction: F5           defb F5h
+ 75   8663              8669 F5           defb F5h
+c:\Projects\Z80-Snake\.tmp\disasm.list(76): error: Invalid temporary label (not a number): 866A
+c:\Projects\Z80-Snake\.tmp\disasm.list(76): error: Unrecognized instruction: B7           defb B7h
+ 76   8663              866A B7           defb B7h
+c:\Projects\Z80-Snake\.tmp\disasm.list(77): error: Invalid temporary label (not a number): 866B
+c:\Projects\Z80-Snake\.tmp\disasm.list(77): error: Unrecognized instruction: 20           defb 20h
+c:\Projects\Z80-Snake\.tmp\disasm.list(77): error: Unexpected: 20           defb 20h
+ 77   8663              866B 20           defb 20h
+c:\Projects\Z80-Snake\.tmp\disasm.list(78): error: Invalid temporary label (not a number): 866C
+c:\Projects\Z80-Snake\.tmp\disasm.list(78): error: Unrecognized instruction: 17           defb 17h
+c:\Projects\Z80-Snake\.tmp\disasm.list(78): error: Unexpected: 17           defb 17h
+ 78   8663              866C 17           defb 17h
+c:\Projects\Z80-Snake\.tmp\disasm.list(79): error: Invalid temporary label (not a number): 866D
+c:\Projects\Z80-Snake\.tmp\disasm.list(79): error: Unrecognized instruction: 21           defb 21h
+c:\Projects\Z80-Snake\.tmp\disasm.list(79): error: Unexpected: 21           defb 21h
+ 79   8663              866D 21           defb 21h
+c:\Projects\Z80-Snake\.tmp\disasm.list(80): error: Invalid temporary label (not a number): 866E
+c:\Projects\Z80-Snake\.tmp\disasm.list(80): error: Unrecognized instruction: 02           defb 02h
+c:\Projects\Z80-Snake\.tmp\disasm.list(80): error: Unexpected: 02           defb 02h
+ 80   8663              866E 02           defb 02h
+c:\Projects\Z80-Snake\.tmp\disasm.list(81): error: Invalid temporary label (not a number): 866F
+c:\Projects\Z80-Snake\.tmp\disasm.list(81): error: Unrecognized instruction: 80           defb 80h
+c:\Projects\Z80-Snake\.tmp\disasm.list(81): error: Unexpected: 80           defb 80h
+ 81   8663              866F 80           defb 80h
+c:\Projects\Z80-Snake\.tmp\disasm.list(82): error: Unrecognized instruction: 11           defb 11h
+c:\Projects\Z80-Snake\.tmp\disasm.list(82): error: Unexpected: 11           defb 11h
+ 82   8663              8670 11           defb 11h
+c:\Projects\Z80-Snake\.tmp\disasm.list(83): error: Unrecognized instruction: 00           defb 00h
+c:\Projects\Z80-Snake\.tmp\disasm.list(83): error: Unexpected: 00           defb 00h
+ 83   8663              8671 00           defb 00h
+c:\Projects\Z80-Snake\.tmp\disasm.list(84): error: Unrecognized instruction: 80           defb 80h
+c:\Projects\Z80-Snake\.tmp\disasm.list(84): error: Unexpected: 80           defb 80h
+ 84   8663              8672 80           defb 80h
+c:\Projects\Z80-Snake\.tmp\disasm.list(85): error: Unrecognized instruction: ED           defb EDh
+ 85   8663              8673 ED           defb EDh
+c:\Projects\Z80-Snake\.tmp\disasm.list(86): error: Unrecognized instruction: 4B           defb 4Bh
+c:\Projects\Z80-Snake\.tmp\disasm.list(86): error: Unexpected: 4B           defb 4Bh
+ 86   8663              8674 4B           defb 4Bh
+c:\Projects\Z80-Snake\.tmp\disasm.list(87): error: Unrecognized instruction: 00           defb 00h
+c:\Projects\Z80-Snake\.tmp\disasm.list(87): error: Unexpected: 00           defb 00h
+ 87   8663              8675 00           defb 00h
+c:\Projects\Z80-Snake\.tmp\disasm.list(88): error: Unrecognized instruction: 86           defb 86h
+c:\Projects\Z80-Snake\.tmp\disasm.list(88): error: Unexpected: 86           defb 86h
+ 88   8663              8676 86           defb 86h
+c:\Projects\Z80-Snake\.tmp\disasm.list(89): error: Unrecognized instruction: 7E           defb 7Eh
+c:\Projects\Z80-Snake\.tmp\disasm.list(89): error: Unexpected: 7E           defb 7Eh
+ 89   8663              8677 7E           defb 7Eh
+c:\Projects\Z80-Snake\.tmp\disasm.list(90): error: Unrecognized instruction: 12           defb 12h
+c:\Projects\Z80-Snake\.tmp\disasm.list(90): error: Unexpected: 12           defb 12h
+ 90   8663              8678 12           defb 12h
+c:\Projects\Z80-Snake\.tmp\disasm.list(91): error: Unrecognized instruction: 23           defb 23h
+c:\Projects\Z80-Snake\.tmp\disasm.list(91): error: Unexpected: 23           defb 23h
+ 91   8663              8679 23           defb 23h
+c:\Projects\Z80-Snake\.tmp\disasm.list(92): error: Invalid temporary label (not a number): 867A
+c:\Projects\Z80-Snake\.tmp\disasm.list(92): error: Unrecognized instruction: 13           defb 13h
+c:\Projects\Z80-Snake\.tmp\disasm.list(92): error: Unexpected: 13           defb 13h
+ 92   8663              867A 13           defb 13h
+c:\Projects\Z80-Snake\.tmp\disasm.list(93): error: Invalid temporary label (not a number): 867B
+c:\Projects\Z80-Snake\.tmp\disasm.list(93): error: Unrecognized instruction: 7E           defb 7Eh
+c:\Projects\Z80-Snake\.tmp\disasm.list(93): error: Unexpected: 7E           defb 7Eh
+ 93   8663              867B 7E           defb 7Eh
+ 94   8663
+ 95   8663
+ 96   8663                           org 86DEh
+ 97   86DE
+ 98   86DE
+c:\Projects\Z80-Snake\.tmp\disasm.list(99): error: Invalid temporary label (not a number): 86DE
+c:\Projects\Z80-Snake\.tmp\disasm.list(99): error: Unrecognized instruction: L86DE
+ 99   86DE              86DE L86DE
+ 99   86DE
+c:\Projects\Z80-Snake\.tmp\disasm.list(100): error: Invalid temporary label (not a number): 86DE
+c:\Projects\Z80-Snake\.tmp\disasm.list(100): error: Unrecognized instruction: F1           POP  AF
+100   86DE              86DE F1           POP  AF
+c:\Projects\Z80-Snake\.tmp\disasm.list(101): error: Invalid temporary label (not a number): 86DF
+c:\Projects\Z80-Snake\.tmp\disasm.list(101): error: Unrecognized instruction: 77           LD   (HL),A
+c:\Projects\Z80-Snake\.tmp\disasm.list(101): error: Unexpected: 77           LD   (HL),A
+101   86DE              86DF 77           LD   (HL),A
+c:\Projects\Z80-Snake\.tmp\disasm.list(102): error: Invalid temporary label (not a number): 86E0
+c:\Projects\Z80-Snake\.tmp\disasm.list(102): error: Unrecognized instruction: D1           POP  DE
+102   86DE              86E0 D1           POP  DE
+c:\Projects\Z80-Snake\.tmp\disasm.list(103): error: Invalid temporary label (not a number): 86E1
+c:\Projects\Z80-Snake\.tmp\disasm.list(103): error: Unrecognized instruction: E1           POP  HL
+103   86DE              86E1 E1           POP  HL
+c:\Projects\Z80-Snake\.tmp\disasm.list(104): error: Invalid temporary label (not a number): 86E2
+c:\Projects\Z80-Snake\.tmp\disasm.list(104): error: Unrecognized instruction: C9           RET
+104   86DE              86E2 C9           RET
+105   86DE
+106   86DE
+c:\Projects\Z80-Snake\.tmp\disasm.list(107): error: Invalid temporary label (not a number): 86E3
+c:\Projects\Z80-Snake\.tmp\disasm.list(107): error: Unrecognized instruction: 21           defb 21h
+c:\Projects\Z80-Snake\.tmp\disasm.list(107): error: Unexpected: 21           defb 21h
+107   86DE              86E3 21           defb 21h
+c:\Projects\Z80-Snake\.tmp\disasm.list(108): error: Invalid temporary label (not a number): 86E4
+c:\Projects\Z80-Snake\.tmp\disasm.list(108): error: Unrecognized instruction: 75           defb 75h
+c:\Projects\Z80-Snake\.tmp\disasm.list(108): error: Unexpected: 75           defb 75h
+108   86DE              86E4 75           defb 75h
+c:\Projects\Z80-Snake\.tmp\disasm.list(109): error: Invalid temporary label (not a number): 86E5
+c:\Projects\Z80-Snake\.tmp\disasm.list(109): error: Unrecognized instruction: 80           defb 80h
+c:\Projects\Z80-Snake\.tmp\disasm.list(109): error: Unexpected: 80           defb 80h
+109   86DE              86E5 80           defb 80h
+c:\Projects\Z80-Snake\.tmp\disasm.list(110): error: Invalid temporary label (not a number): 86E6
+c:\Projects\Z80-Snake\.tmp\disasm.list(110): error: Unrecognized instruction: 11           defb 11h
+c:\Projects\Z80-Snake\.tmp\disasm.list(110): error: Unexpected: 11           defb 11h
+110   86DE              86E6 11           defb 11h
+c:\Projects\Z80-Snake\.tmp\disasm.list(111): error: Invalid temporary label (not a number): 86E7
+c:\Projects\Z80-Snake\.tmp\disasm.list(111): error: Unrecognized instruction: E0           defb E0h
+111   86DE              86E7 E0           defb E0h
+c:\Projects\Z80-Snake\.tmp\disasm.list(112): error: Invalid temporary label (not a number): 86E8
+c:\Projects\Z80-Snake\.tmp\disasm.list(112): error: Unrecognized instruction: DE           defb DEh
+112   86DE              86E8 DE           defb DEh
+c:\Projects\Z80-Snake\.tmp\disasm.list(113): error: Invalid temporary label (not a number): 86E9
+c:\Projects\Z80-Snake\.tmp\disasm.list(113): error: Unrecognized instruction: 22           defb 22h
+c:\Projects\Z80-Snake\.tmp\disasm.list(113): error: Unexpected: 22           defb 22h
+113   86DE              86E9 22           defb 22h
+c:\Projects\Z80-Snake\.tmp\disasm.list(114): error: Invalid temporary label (not a number): 86EA
+c:\Projects\Z80-Snake\.tmp\disasm.list(114): error: Unrecognized instruction: E7           defb E7h
+114   86DE              86EA E7           defb E7h
+c:\Projects\Z80-Snake\.tmp\disasm.list(115): error: Invalid temporary label (not a number): 86EB
+c:\Projects\Z80-Snake\.tmp\disasm.list(115): error: Unrecognized instruction: 86           defb 86h
+c:\Projects\Z80-Snake\.tmp\disasm.list(115): error: Unexpected: 86           defb 86h
+115   86DE              86EB 86           defb 86h
+c:\Projects\Z80-Snake\.tmp\disasm.list(116): error: Invalid temporary label (not a number): 86EC
+c:\Projects\Z80-Snake\.tmp\disasm.list(116): error: Unrecognized instruction: 7D           defb 7Dh
+c:\Projects\Z80-Snake\.tmp\disasm.list(116): error: Unexpected: 7D           defb 7Dh
+116   86DE              86EC 7D           defb 7Dh
+c:\Projects\Z80-Snake\.tmp\disasm.list(117): error: Invalid temporary label (not a number): 86ED
+c:\Projects\Z80-Snake\.tmp\disasm.list(117): error: Unrecognized instruction: 87           defb 87h
+c:\Projects\Z80-Snake\.tmp\disasm.list(117): error: Unexpected: 87           defb 87h
+117   86DE              86ED 87           defb 87h
+c:\Projects\Z80-Snake\.tmp\disasm.list(118): error: Invalid temporary label (not a number): 86EE
+c:\Projects\Z80-Snake\.tmp\disasm.list(118): error: Unrecognized instruction: 87           defb 87h
+c:\Projects\Z80-Snake\.tmp\disasm.list(118): error: Unexpected: 87           defb 87h
+118   86DE              86EE 87           defb 87h
+c:\Projects\Z80-Snake\.tmp\disasm.list(119): error: Invalid temporary label (not a number): 86EF
+c:\Projects\Z80-Snake\.tmp\disasm.list(119): error: Unrecognized instruction: 87           defb 87h
+c:\Projects\Z80-Snake\.tmp\disasm.list(119): error: Unexpected: 87           defb 87h
+119   86DE              86EF 87           defb 87h
+c:\Projects\Z80-Snake\.tmp\disasm.list(120): error: Invalid temporary label (not a number): 86F0
+c:\Projects\Z80-Snake\.tmp\disasm.list(120): error: Unrecognized instruction: AD           defb ADh
+120   86DE              86F0 AD           defb ADh
+c:\Projects\Z80-Snake\.tmp\disasm.list(121): error: Invalid temporary label (not a number): 86F1
+c:\Projects\Z80-Snake\.tmp\disasm.list(121): error: Unrecognized instruction: 6F           defb 6Fh
+c:\Projects\Z80-Snake\.tmp\disasm.list(121): error: Unexpected: 6F           defb 6Fh
+121   86DE              86F1 6F           defb 6Fh
+c:\Projects\Z80-Snake\.tmp\disasm.list(122): error: Invalid temporary label (not a number): 86F2
+c:\Projects\Z80-Snake\.tmp\disasm.list(122): error: Unrecognized instruction: 7A           defb 7Ah
+c:\Projects\Z80-Snake\.tmp\disasm.list(122): error: Unexpected: 7A           defb 7Ah
+122   86DE              86F2 7A           defb 7Ah
+c:\Projects\Z80-Snake\.tmp\disasm.list(123): error: Invalid temporary label (not a number): 86F3
+c:\Projects\Z80-Snake\.tmp\disasm.list(123): error: Unrecognized instruction: 87           defb 87h
+c:\Projects\Z80-Snake\.tmp\disasm.list(123): error: Unexpected: 87           defb 87h
+123   86DE              86F3 87           defb 87h
+c:\Projects\Z80-Snake\.tmp\disasm.list(124): error: Invalid temporary label (not a number): 86F4
+c:\Projects\Z80-Snake\.tmp\disasm.list(124): error: Unrecognized instruction: AA           defb AAh
+124   86DE              86F4 AA           defb AAh
+c:\Projects\Z80-Snake\.tmp\disasm.list(125): error: Invalid temporary label (not a number): 86F5
+c:\Projects\Z80-Snake\.tmp\disasm.list(125): error: Unrecognized instruction: 67           defb 67h
+c:\Projects\Z80-Snake\.tmp\disasm.list(125): error: Unexpected: 67           defb 67h
+125   86DE              86F5 67           defb 67h
 # file closed: c:\Projects\Z80-Snake\.tmp\disasm.list
