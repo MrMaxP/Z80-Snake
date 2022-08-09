@@ -1,0 +1,7 @@
+# Transient files
+*.sld
+*.lst
+*.sna
+
+# Temporary folder
+.tmp
