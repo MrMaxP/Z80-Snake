@@ -1,6 +1,9 @@
 		DEVICE ZXSPECTRUM48
 		SLDOPT COMMENT WPMEM, LOGPOINT, ASSERTION, OUTPUT
 
+		DEFINE	BACKGROUND_COLOUR	%00111111
+		DEFINE	SNAKE_COLOUR		%00000000
+
 		org	8000h
 
 ; Memory for our block array
@@ -11,6 +14,8 @@ SnakeLen	DW	0
 ApplePos	DW	0
 SnakeHeadPos	DW	0
 SnakeDirection	DW	$0100
+FrameDelay	DB	10
+FrameDelayCounter	DB	10
 
 
 ; ---------------------------------------------------------------------------
@@ -41,9 +46,9 @@ Init
 	ld	(SnakeHeadPos), bc
 
 	ld	a, 1
-	call	StepSnake
-	call	StepSnake
-	call	StepSnake
+	call	UpdateSnake
+	call	UpdateSnake
+	call	UpdateSnake
 
 	call	PlaceApple
 
@@ -52,11 +57,19 @@ Init
      	out	(254),a
 
 	call	DrawApple
-	call	DrawSnake
+
+	; Decrement the frame delay
+	ld	hl, FrameDelayCounter
+	dec	(hl)
+	jr	nz, .skipMove
+
+	; Reset frame delay
+	ld	a, (FrameDelay)
+	ld	(FrameDelayCounter), a
 
 	xor	a
-	call	StepSnake
-
+	call	UpdateSnake
+.skipMove
 	halt
 	jr	.loop
 
@@ -66,31 +79,10 @@ DrawApple
 	call	Plot
 	ret
 
-DrawSnake
-	ld	de, (SnakeLen)
-	ld	hl, SnakePosArray
-.lp
-	ld	c, (hl)
-	inc	hl
-	ld	b, (hl)
-	inc	hl
-
-	ld	a, 0
-	call	Plot
-
-	dec	de
-	ld	a, d
-	or	e
-	jr	nz, .lp
-
-	ret
-
-StepSnake
+UpdateSnake
 	push	af
 	; move the snake in the current direction
 	; if a is non-zero then expand the snake
-
-	; Do it the bad way (i.e. NOT using a circular buffer)
 
 	or	a
 	jr	nz, .skipMove
@@ -99,18 +91,26 @@ StepSnake
 	ld	de, SnakePosArray
 	ld	bc, (SnakeLen)
 .lp
+	push bc
 
 // move xpos
 	ld	a, (hl)
 	ld	(de), a
+	ld	c, a
 	inc	hl
 	inc	de
 
-// mode ypos
+// move ypos
 	ld	a, (hl)
 	ld	(de), a
+	ld	b, a
 	inc	hl
 	inc	de
+
+	ld	a, BACKGROUND_COLOUR
+	call	Plot
+
+	pop	bc
 
 	dec	bc
 	ld	a, b
@@ -118,18 +118,37 @@ StepSnake
 	jr	nz, .lp
 
 .skipMove
+	; SnakeHeadPos is stored as x and y bytes. Pull them out into H and L in one operation
 	ld	hl, (SnakeHeadPos)
+	; SnakeDirection is stored as the value to add to x and y.
+	; They will either be 1 or -1. -1 is represented at 255, adding 255 to a byte will wrap it to 1 less than its original value.
 	ld	bc, (SnakeDirection)
 
-	; Add the direction to the position (do each byte separately so a carry on the X doesn't affect the Y etc.)
+	; Add the x direction to the x position
 	ld	a, l
 	add	c
+	and	31	; And the bottom 5 bits (screen is 32 bytes wide) to keep the x within the screen range
 	ld	c, A
 
+	; Add the y direction to the y position
 	ld	a, h
 	add	b
+	jr	nc, .noNeg
+
+	; The y pos went negative, add 24 to bring it back on the bottom
+	add	24
+.noNeg
+	cp	24
+	jr	c, .noWrap
+
+	; The y pas was above our screen max y, subtract screen height to bring it back to the top
+	sub	24
+.noWrap
 	ld	b, a
 	ld	(SnakeHeadPos), bc
+
+	ld	a, SNAKE_COLOUR
+	call Plot
 
 	ld	de, (SnakeLen)
 	ld	hl, SnakePosArray
@@ -174,7 +193,7 @@ Clear
 
 Plot
 	; Plots a colour character at C = X, B = Y, A = colour
-	; doesn't corrupt BC, DE
+	; doesn't corrupt HL, DE
 	; corrupts A
 
 	push	hl
