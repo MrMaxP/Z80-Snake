@@ -12,6 +12,7 @@
 				"zrcp": {
 					"hostname": "localhost",
 					"port": 10000,
+					"loadDelay": 700,
 					"skipInterrupt": false
 				},
 	//          "topOfStack": "Stack_Top",

@@ -275,6 +275,16 @@ UpdateSnake
 
 	ld	(SnakeHeadAttribute), a
 
+	pop	af
+
+	or	a
+	jr	z, .skipIncLen
+
+	ld	hl, (SnakeLen)
+	inc	hl
+	ld	(SnakeLen), hl
+
+.skipIncLen
 	ld	de, (SnakeLen)
 	ld	hl, SnakePosArray
 	add	hl, de
@@ -283,15 +293,6 @@ UpdateSnake
 	ld	(hl), c
 	inc	hl
 	ld	(hl), b
-
-	pop	af
-
-	or	a
-	ret	z
-
-	ld	hl, (SnakeLen)
-	inc	hl
-	ld	(SnakeLen), hl
 
 	ret
 
