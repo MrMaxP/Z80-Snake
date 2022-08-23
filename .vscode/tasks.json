@@ -1,0 +1,25 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+                {
+            "label": "sjasmplus",
+            "type": "shell",
+            "command": "sjasmplus",
+
+//			"sjasmplus --sld=${fileBasenameNoExt}.sld --lst --fullpath ${file}"
+
+            "args": [
+                "--sld=${fileBasenameNoExtension}.sld",
+                "--lst",
+                "--fullpath",
+                "${fileBasename}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$errmatcher-sjasmplus"        }
+    ]
+}

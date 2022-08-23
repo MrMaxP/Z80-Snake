@@ -5,42 +5,70 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"type": "dezog",
-			"request": "launch",
-			"name": "Simulator - ZX Spectrum+Next",
-			"remoteType": "zsim",
-			"zsim": {
-				"Z80N": true,
-				"visualMemory": true,
-				"memoryModel": "ZX48K",
-				"ulaScreen": true,
-				"zxBorderWidth": 20,
-				"vsyncInterrupt": true,
-				"zxKeyboard": false,
-				"zxBeeper": false
-			},
-			"disassemblerArgs": {
-				"esxdosRst": true
-			},
-			"sjasmplus": [
-				{
-					"path": "main.sld",
+				"type": "dezog",
+				"request": "launch",
+				"name": "Z80 Debugger",
+				"remoteType": "zrcp",
+				"zrcp": {
+					"hostname": "localhost",
+					"port": 10000,
+					"skipInterrupt": false
 				},
-			],
-			"commandsAfterLaunch": [
-				"-logpoint enable",
-				"-assertion enable",
-				"-wpmem enable"
-			],
-			"history": {
-				"reverseDebugInstructionCount": 1000000,
-				"spotCount": 10,
-				"codeCoverageEnabled": true
-			},
-			"startAutomatically": true,
-			"rootFolder": "${workspaceFolder}",
-			"load": "main.sna",
-			"topOfStack": "$FF00"
+	//          "topOfStack": "Stack_Top",
+				"rootFolder": "${fileDirname}",
+				"sjasmplus": [
+				  {
+					  "path": "${fileDirname}/${fileBasenameNoExtension}.sld",
+					  "useFiles": true,
+					  "asm": "sjasmplus",
+					  "mainFile": "${fileDirname}/${fileBasenameNoExtension}.asm"
+				  }
+				],
+				"disassemblerArgs": {
+					"esxdosRst": true
+				},
+				"load": "${fileDirname}/${fileBasenameNoExtension}.sna",
+				"startAutomatically": false,
+				"preLaunchTask": "sjasmplus"
+
+
+
+//			"type": "dezog",
+//			"request": "launch",
+//			"name": "Simulator - ZX Spectrum",
+//			"remoteType": "zsim",
+//			"zsim": {
+//				"Z80N": true,
+//				"visualMemory": true,
+//				"memoryModel": "ZX48K",
+//				"ulaScreen": true,
+//				"zxBorderWidth": 20,
+//				"vsyncInterrupt": true,
+//				"zxKeyboard": false,
+//				"zxBeeper": false
+//			},
+//			"disassemblerArgs": {
+//				"esxdosRst": true
+//			},
+//			"sjasmplus": [
+//				{
+//					"path": "main.sld",
+//				},
+//			],
+//			"commandsAfterLaunch": [
+//				"-logpoint enable",
+//				"-assertion enable",
+//				"-wpmem enable"
+//			],
+//			"history": {
+//				"reverseDebugInstructionCount": 1000000,
+//				"spotCount": 10,
+//				"codeCoverageEnabled": true
+//			},
+//			"startAutomatically": true,
+//			"rootFolder": "${workspaceFolder}",
+//			"load": "main.sna",
+//			"topOfStack": "$FF00"
 		}
 	]
 }

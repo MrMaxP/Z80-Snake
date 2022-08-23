@@ -3,6 +3,7 @@
 
 		DEFINE	BACKGROUND_COLOUR	%00111111
 		DEFINE	SNAKE_COLOUR		%00000000
+		DEFINE	APPLE_COLOUR		%00100100
 
 		org	8000h
 
@@ -13,23 +14,34 @@ SnakePosArrayEnd
 SnakeLen	DW	0
 ApplePos	DW	0
 SnakeHeadPos	DW	0
-SnakeDirection	DW	$0100
+SnakeDirection	DW	0
 FrameDelay	DB	10
 FrameDelayCounter	DB	10
+SnakeHeadAttribute	DB	0
+AppleEaten		DB	0
 
 
 ; ---------------------------------------------------------------------------
 Start
 	di
-
 	call	SetInterrupts
+	ei
 
-	; Clear the screen
+Restart
+	; Clear the bitmap screen
 
 	ld	hl, $4000
 	ld	bc, $1800
 	ld	e, 0
 	call	Clear
+
+	; Clear the screen attributes
+
+	ld	hl, $5800
+	ld	bc, $0300
+	ld	e, BACKGROUND_COLOUR
+	call	Clear
+
 
 	; Clear the snake pos array
 
@@ -38,12 +50,18 @@ Start
 	ld	e, 0
 	call	Clear
 
-	ei
+	; Set the border to blue
+	ld	a, %001
+	out	($fe), a
 Init
 	; Set our snake's initial position and step it while setting the grow flag to make it 3 long
 
-	ld	bc, $FF08
-	ld	(SnakeHeadPos), bc
+	ld	hl, $0008
+	ld	(SnakeHeadPos), hl
+	ld	hl, $0100
+	ld	(SnakeDirection), hl
+	ld	hl, 0
+	ld	(SnakeLen), hl
 
 	ld	a, 1
 	call	UpdateSnake
@@ -53,10 +71,9 @@ Init
 	call	PlaceApple
 
 .loop
-     	ld	a,r
-     	out	(254),a
-
 	call	DrawApple
+
+	call	PlayerInput
 
 	; Decrement the frame delay
 	ld	hl, FrameDelayCounter
@@ -67,15 +84,120 @@ Init
 	ld	a, (FrameDelay)
 	ld	(FrameDelayCounter), a
 
-	xor	a
+	ld	a, (AppleEaten)
 	call	UpdateSnake
+	xor	a
+	ld	(AppleEaten), a
+
+	call	TestSnakeHead
 .skipMove
+	ld	a, %001
+	out	($fe), a
 	halt
+	ld	a, %100
+	out	($fe), a
+
 	jr	.loop
+
+TestSnakeHead
+	ld	a, (SnakeHeadAttribute)
+	cp	BACKGROUND_COLOUR
+	ret	z
+
+	cp	SNAKE_COLOUR
+	jr	nz, .stillAlive
+
+	ld	c, 0
+.GameOver
+	djnz	$
+	ld	a, %010
+	out	($fe), a
+	djnz	$
+	ld	a, %001
+	out	($fe), a
+
+	dec	c
+	jr	nz, .GameOver
+
+	jp	Restart
+
+.stillAlive
+	cp	APPLE_COLOUR
+	jr	nz, .notEatenApple
+
+	ld	a, 1
+	ld	(AppleEaten), a
+
+	call	PlaceApple
+
+	ld	a, (FrameDelay)
+	dec	a
+	jr	z, .skip
+	ld	(FrameDelay), a
+.skip
+
+.notEatenApple
+	ret
+
+PlayerInput
+	; Read the keyboard. We're using Q, A, O, P for cursor movement
+
+
+	; Get the x dir and if it's not zero we're already moving in x so skip any X dir change
+	ld	a, (SnakeDirection)
+	or	a
+	jr	nz, .noXChange
+
+	; Test the keyboard bit associated with the O (left) key
+	ld	a, $df
+	in	a,($fe)
+	bit	1, a
+	jr	nz, .noLeft
+
+	; set the snakes X dir to FF i.e. -1 so when we add it to X we go left
+	ld	hl, $00FF
+	ld	(SnakeDirection), hl
+	ret
+.noLeft
+	ld	a, $df
+	in	a,($fe)
+	bit	0, a
+	jr	nz, .noRight
+	ld	hl, $0001
+	ld	(SnakeDirection), hl
+	ret
+.noRight
+.noXChange
+
+	; Get the y dir and if it's not zero we're already moving in y so skip any y dir change
+	ld	a, (SnakeDirection+1)
+	or	a
+	jr	nz, .noYChange
+
+
+	ld	a, $fb
+	in	a,($fe)
+	bit	0, a
+	jr	nz, .noUp
+	ld	hl, $FF00
+	ld	(SnakeDirection), hl
+	ret
+.noUp
+	ld	a, $fd
+	in	a,($fe)
+	bit	0, a
+	jr	nz, .noDown
+	ld	hl, $0100
+	ld	(SnakeDirection), hl
+	ret
+.noDown
+.noYChange
+	ret
+
 
 DrawApple
 	ld	bc,(ApplePos)
-	ld	a, %00100100
+	ld	a, APPLE_COLOUR
 	call	Plot
 	ret
 
@@ -85,41 +207,42 @@ UpdateSnake
 	; if a is non-zero then expand the snake
 
 	or	a
-	jr	nz, .skipMove
+	jr	nz, .skipArrayShift
 
-	ld	hl, SnakePosArray + 2
+	ld	hl, SnakePosArray
 	ld	de, SnakePosArray
+
+	; Clear snake tail and increment HL to point to the new tail
+	ld	c, (hl)
+	inc	hl
+	ld	b, (hl)
+	inc	hl
+	ld	a, BACKGROUND_COLOUR
+	call	Plot
+
 	ld	bc, (SnakeLen)
 .lp
-	push bc
-
 // move xpos
 	ld	a, (hl)
 	ld	(de), a
-	ld	c, a
 	inc	hl
 	inc	de
 
 // move ypos
 	ld	a, (hl)
 	ld	(de), a
-	ld	b, a
 	inc	hl
 	inc	de
-
-	ld	a, BACKGROUND_COLOUR
-	call	Plot
-
-	pop	bc
 
 	dec	bc
 	ld	a, b
 	or	c
 	jr	nz, .lp
 
-.skipMove
+.skipArrayShift
 	; SnakeHeadPos is stored as x and y bytes. Pull them out into H and L in one operation
 	ld	hl, (SnakeHeadPos)
+
 	; SnakeDirection is stored as the value to add to x and y.
 	; They will either be 1 or -1. -1 is represented at 255, adding 255 to a byte will wrap it to 1 less than its original value.
 	ld	bc, (SnakeDirection)
@@ -133,7 +256,7 @@ UpdateSnake
 	; Add the y direction to the y position
 	ld	a, h
 	add	b
-	jr	nc, .noNeg
+	jp	p, .noNeg
 
 	; The y pos went negative, add 24 to bring it back on the bottom
 	add	24
@@ -141,14 +264,16 @@ UpdateSnake
 	cp	24
 	jr	c, .noWrap
 
-	; The y pas was above our screen max y, subtract screen height to bring it back to the top
+	; The y pos was above our screen max y, subtract screen height to bring it back to the top
 	sub	24
 .noWrap
 	ld	b, a
 	ld	(SnakeHeadPos), bc
 
 	ld	a, SNAKE_COLOUR
-	call Plot
+	call	Plot
+
+	ld	(SnakeHeadAttribute), a
 
 	ld	de, (SnakeLen)
 	ld	hl, SnakePosArray
@@ -193,11 +318,12 @@ Clear
 
 Plot
 	; Plots a colour character at C = X, B = Y, A = colour
-	; doesn't corrupt HL, DE
-	; corrupts A
+	; doesn't corrupt BC, DE, HL
+	; returns a as the attribute of the plot pos before it was written over
 
-	push	hl
+	push	bc
 	push	de
+	push	hl
 	push	af
 
 	ld	l, b	; Load the HL register pair with the Y pos
@@ -215,17 +341,22 @@ Plot
 	ld	de, $5800	; Ass the base address of the attribute map
 	add	hl, de
 
+	ld	c, (hl)
+
 	pop	af
 
 	ld	(hl), a	; write the value
+	ld	a, c
 
-	pop	de
 	pop	hl
+	pop	de
+	pop	bc
 
 	ret
 
 Rnd
-	; Awesome randome number generator stolen from the internet
+	; Awesome random number generator stolen from the internet
+	; (note the self modifying code)
 
 	ld 	hl,0xA280   ; yw -> zt
         ld 	de,0xC0DE   ; xz -> yw
@@ -250,27 +381,27 @@ Rnd
 
 SetInterrupts
 	ld	hl, VectorTable
-	ld	de, IM2Routine
-	ld	b, 128
-
 	ld	a, h
 	ld	i, a
+
+	ld	b, 0
 .InterruptLP
-	ld	(hl), e
-	inc	hl
-	ld	(hl), d
+	ld	(hl), $fe
 	inc	hl
 	djnz	.InterruptLP
+	ld	(hl), $fe
 
 	im	2
 
 	ret
+
+	ORG		$FEFE
 IM2Routine
 	ei
 	reti
 
 ; Make sure this is on a 256 byte boundary
-	ORG           $F000
+	ORG           $FD00
 VectorTable
         defs          256
 
