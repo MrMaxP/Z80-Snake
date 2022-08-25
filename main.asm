@@ -9,16 +9,17 @@
 
 ; Memory for our block array
 ; Max possible size of w * h * 2 (2 = x, y pos)
-SnakePosArray	BLOCK	32*24*2
+SnakePosArray		BLOCK	32*24*2
 SnakePosArrayEnd
-SnakeLen	DW	0
-ApplePos	DW	0
-SnakeHeadPos	DW	0
-SnakeDirection	DW	0
-FrameDelay	DB	10
-FrameDelayCounter	DB	10
+SnakeLen		DW	0
+ApplePos		DW	0
+SnakeHeadPos		DW	0
+SnakeDirection		DW	0
+FrameDelay		DB	6
+FrameDelayCounter	DB	6
 SnakeHeadAttribute	DB	0
 AppleEaten		DB	0
+SnakeDead		DB	0
 
 
 ; ---------------------------------------------------------------------------
@@ -63,6 +64,9 @@ Init
 	ld	hl, 0
 	ld	(SnakeLen), hl
 
+	xor	a
+	ld	(SnakeDead), a
+
 	ld	a, 1
 	call	UpdateSnake
 	call	UpdateSnake
@@ -84,12 +88,25 @@ Init
 	ld	a, (FrameDelay)
 	ld	(FrameDelayCounter), a
 
+
+	; reset our dead flag
+	xor	a
+	ld	(SnakeDead), a
+
 	ld	a, (AppleEaten)
 	call	UpdateSnake
+
+	; reset our apple eaten flag ready to rest it again
 	xor	a
 	ld	(AppleEaten), a
 
 	call	TestSnakeHead
+	ld	a, (SnakeDead)
+	or	a
+	jr	z, .skipMove
+
+	jr	Dead
+
 .skipMove
 	ld	a, %001
 	out	($fe), a
@@ -105,8 +122,27 @@ TestSnakeHead
 	ret	z
 
 	cp	SNAKE_COLOUR
-	jr	nz, .stillAlive
+	jr	z, Dead
 
+.stillAlive
+	cp	APPLE_COLOUR
+	jr	nz, .notEatenApple
+
+	ld	a, 1
+	ld	(AppleEaten), a
+
+	call	PlaceApple
+
+	; ld	a, (FrameDelay)
+	; dec	a
+	; jr	z, .skip
+	; ld	(FrameDelay), a
+.skip
+
+.notEatenApple
+	ret
+
+Dead
 	ld	c, 0
 .GameOver
 	djnz	$
@@ -120,24 +156,6 @@ TestSnakeHead
 	jr	nz, .GameOver
 
 	jp	Restart
-
-.stillAlive
-	cp	APPLE_COLOUR
-	jr	nz, .notEatenApple
-
-	ld	a, 1
-	ld	(AppleEaten), a
-
-	call	PlaceApple
-
-	ld	a, (FrameDelay)
-	dec	a
-	jr	z, .skip
-	ld	(FrameDelay), a
-.skip
-
-.notEatenApple
-	ret
 
 PlayerInput
 	; Read the keyboard. We're using Q, A, O, P for cursor movement
@@ -240,6 +258,9 @@ UpdateSnake
 	jr	nz, .lp
 
 .skipArrayShift
+	; use e as our dead flat (went off screen)
+	ld	e, 0
+
 	; SnakeHeadPos is stored as x and y bytes. Pull them out into H and L in one operation
 	ld	hl, (SnakeHeadPos)
 
@@ -250,26 +271,42 @@ UpdateSnake
 	; Add the x direction to the x position
 	ld	a, l
 	add	c
-	and	31	; And the bottom 5 bits (screen is 32 bytes wide) to keep the x within the screen range
-	ld	c, A
+	ld	c, a
 
+	; check if we've gone off screen and kill us if we did
+	cp	32
+	jr	c, .onScreenX
+	jp	p, .onScreenX
+
+	ld	e, 1
+.onScreenX
 	; Add the y direction to the y position
 	ld	a, h
 	add	b
-	jp	p, .noNeg
-
-	; The y pos went negative, add 24 to bring it back on the bottom
-	add	24
-.noNeg
-	cp	24
-	jr	c, .noWrap
-
-	; The y pos was above our screen max y, subtract screen height to bring it back to the top
-	sub	24
-.noWrap
 	ld	b, a
+
+	; check if we've gone off screen and kill us if we did
+	cp	24
+	jr	c, .onScreenY
+	jp	p, .onScreenY
+
+	ld	e, 1
+
+.onScreenY
 	ld	(SnakeHeadPos), bc
 
+	ld	a, e
+	or	a
+	jr	z, .alive
+
+	; we're dead. Clean up the stack, set the dead flag and return early
+
+	ld	(SnakeDead), a
+	pop	af
+
+	ret
+
+.alive
 	ld	a, SNAKE_COLOUR
 	call	Plot
 
@@ -405,6 +442,5 @@ IM2Routine
 	ORG           $FD00
 VectorTable
         defs          256
-
 
 	savesna "main.sna",Start
