@@ -21,7 +21,6 @@ SnakeHeadAttribute	DB	0
 AppleEaten		DB	0
 SnakeDead		DB	0
 
-
 ; ---------------------------------------------------------------------------
 Start
 	di
